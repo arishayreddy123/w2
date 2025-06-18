@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from rest_framework.validators import UniqueValidator
 
 User = get_user_model()
 
@@ -15,11 +15,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name', 'role')
+        fields = ['username', 'email', 'password', 'password2', 'first_name', 'last_name', 'role']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Passwords must match."})
+            raise serializers.ValidationError({"password": "Passwords must match"})
         return attrs
 
     def create(self, validated_data):
@@ -30,4 +30,4 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'role')
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role']
